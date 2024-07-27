@@ -47,11 +47,14 @@ int main(int argc, char *argv[])
   const int x = x_orig;
   int y = y_orig;
 
-  char* text[] = {"'ello luv","hello"};
+  char* text[] = {"hello",
+                  "you",
+                  "cunt"};
 
-for(int i = 0; i <= 1; i++ ){
+for(auto i:text)
+{
   rgb_matrix::DrawText(canvas, font, x, y + font.baseline(),
-                       color, NULL, text[i],
+                       color, NULL, i,
                        letter_spacing);
 
       y += font.height();
