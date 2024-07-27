@@ -1,9 +1,3 @@
-// -*- mode: c++; c-basic-offset: 2; indent-tabs-mode: nil; -*-
-// Small example how write text.
-//
-// This code is public domain
-// (but note, that the led-matrix library this depends on is GPL v2)
-
 #include "led-matrix.h"
 #include "graphics.h"
 
@@ -12,6 +6,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+#include <ctime>
+#include <chrono>
 
 using namespace rgb_matrix;
 
@@ -28,13 +25,11 @@ int main(int argc, char *argv[])
 
   Color color(231, 84, 128); // pink!!
 
-  int x_orig{0};
-  int y_orig{0};
   int letter_spacing{0};
 
   // Load font. This needs to be a filename with a bdf bitmap font.
   rgb_matrix::Font font;
-  if (!font.LoadFont("../fonts/helvR12.bdf"))
+  if (!font.LoadFont("../fonts/5x8.bdf"))
   {
     fprintf(stderr, "Couldn't load font '%s'\n", "helvR12.bdf");
     return 1;
@@ -44,17 +39,26 @@ int main(int argc, char *argv[])
   if (canvas == NULL)
     return 1;
 
-  const int x = x_orig;
-  int y = y_orig;
+  const int x = 1;
+  int y = 0;
 
-  char* text[] = {"hello",
-                  "you",
-                  "cunt"};
+std::time_t date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+struct tm datetime = *localtime(&date);
+char buffer [50];
+strftime(buffer, 50, "%a %e %b", &datetime);
 
+char* text[] = {buffer};
+
+//font.CharacterWidth
 for(auto i:text)
 {
-  rgb_matrix::DrawText(canvas, font, x, y + font.baseline(),
-                       color, NULL, i,
+  rgb_matrix::DrawText(canvas,
+                       font, 
+                       x, 
+                       y + font.baseline(),
+                       color, 
+                       NULL, 
+                       i,
                        letter_spacing);
 
       y += font.height();
@@ -62,6 +66,7 @@ for(auto i:text)
 
   char line[1024];
   fgets(line, sizeof(line), stdin);
+  
   // Finished. Shut down the RGB matrix.
   delete canvas;
 
