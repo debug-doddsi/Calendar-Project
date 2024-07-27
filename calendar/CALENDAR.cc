@@ -15,33 +15,30 @@
 
 using namespace rgb_matrix;
 
+constexpr int boarddimensions{64};
+
 int main(int argc, char *argv[])
 {
   RGBMatrix::Options matrix_options;
   rgb_matrix::RuntimeOptions runtime_opt;
-  rgb_matrix::ParseOptionsFromFlags(&argc,
-                                    &argv,
-                                    &matrix_options,
-                                    &runtime_opt);
+
+  matrix_options.cols = boarddimensions;
+  matrix_options.rows = boarddimensions;
+  matrix_options.disable_hardware_pulsing = true;
 
   Color color(231, 84, 128); // pink!!
-  Color bg_color(0, 0, 0);
 
-  int x_orig = 0;
-  int y_orig = 0;
-  int letter_spacing = 0;
+  int x_orig{0};
+  int y_orig{0};
+  int letter_spacing{0};
 
-  /*
-   * Load font. This needs to be a filename with a bdf bitmap font.
-   */
+  // Load font. This needs to be a filename with a bdf bitmap font.
   rgb_matrix::Font font;
-  font.LoadFont("../fonts/helvR12.bdf");
-
-  /*
-   * If we want an outline around the font, we create a new font with
-   * the original font as a template that is just an outline font.
-   */
-  rgb_matrix::Font *outline_font = NULL;
+  if (!font.LoadFont("../fonts/helvR12.bdf"))
+  {
+    fprintf(stderr, "Couldn't load font '%s'\n", "helvR12.bdf");
+    return 1;
+  }
 
   RGBMatrix *canvas = RGBMatrix::CreateFromOptions(matrix_options, runtime_opt);
   if (canvas == NULL)
@@ -51,7 +48,7 @@ int main(int argc, char *argv[])
   int y = y_orig;
 
   rgb_matrix::DrawText(canvas, font, x, y + font.baseline(),
-                       color, outline_font ? NULL : &bg_color, "hi",
+                       color, NULL, "hi",
                        letter_spacing);
 
   char line[1024];
