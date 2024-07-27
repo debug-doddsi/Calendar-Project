@@ -35,7 +35,7 @@ int main(int argc, char *argv[])
    * Load font. This needs to be a filename with a bdf bitmap font.
    */
   rgb_matrix::Font font;
-  font.LoadFont("fonts/helvR12.bdf");
+  font.LoadFont("../fonts/helvR12.bdf");
 
   /*
    * If we want an outline around the font, we create a new font with
