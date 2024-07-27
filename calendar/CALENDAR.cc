@@ -47,9 +47,15 @@ int main(int argc, char *argv[])
   const int x = x_orig;
   int y = y_orig;
 
+  char* text[] = {"'ello luv","hello"};
+
+for(int i = 0; i <= 1; i++ ){
   rgb_matrix::DrawText(canvas, font, x, y + font.baseline(),
-                       color, NULL, "hi",
+                       color, NULL, text[i],
                        letter_spacing);
+
+      y += font.height();
+};
 
   char line[1024];
   fgets(line, sizeof(line), stdin);
