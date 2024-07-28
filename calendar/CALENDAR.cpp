@@ -11,14 +11,13 @@ int main(int argc, char *argv[])
   RGBMatrix::Options          matrix_options;
   rgb_matrix::RuntimeOptions  runtime_opt;
 
-  matrix_options.cols       = boardDimension;
-  matrix_options.rows       = boardDimension;
+  matrix_options.cols                     = boardDimension;
+  matrix_options.rows                     = boardDimension;
   matrix_options.disable_hardware_pulsing = true; // Needs to be set true to get around an incompatibility with the board
-  cap_sys_nice=eip;
 
   // Load font- This needs to be a filename with a bdf bitmap font.
   rgb_matrix::Font font;
-  if (!font.LoadFont("../fonts/5x7.bdf"))
+  if (!font.LoadFont(chosenFont))
   {
     fprintf(stderr, "Couldn't load font");
     return 1;
@@ -32,10 +31,18 @@ int main(int argc, char *argv[])
 
 std::time_t date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 struct tm datetime = *localtime(&date);
-char buffer [50]; // Arbitrary value
-strftime(buffer, 50, "%a %e %b", &datetime);
+char todaysDate [50]; // Allocate this amount of memory
+strftime(todaysDate, 50, "%a %e %b", &datetime);
 
-char* text[] = {buffer};
+const char* text[] = {todaysDate,
+                      "",                 // Empty line
+                      "> Breakfast",      // Sample entry 1
+                      "  @ 9am",
+                      "> Lunch",          // Sample entry 2
+                      "  @ 12pm",
+                      "> Dinner",         // Sample entry 3
+                      "  @ 6pm"
+                      };
 
 //font.CharacterWidth
 for(auto i:text)

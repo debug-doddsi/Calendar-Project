@@ -18,8 +18,8 @@ using namespace rgb_matrix;
 // Constants
 constexpr int boardDimension    { 64 };
 constexpr int letter_spacing    { 0  };
-constexpr int x_origin          { 1  }; // Where text can begin appearing on the board in the x direction (it will not be on the very edge of the board)
-          int y_origin          { 5  }; // Where text can begin appearing on the board in the y direction (it by default appears with a one pixel gap at the top, so 0 is astute here)
+constexpr int x_origin          { 2  }; // Where text can begin appearing on the board in the x direction (it will not be on the very edge of the board)
+          int y_origin          { 2  }; // Where text can begin appearing on the board in the y direction (it by default appears with a one pixel gap at the top, so 0 is astute here)
 
 
 // ***** Interactable Stuff *****
@@ -27,9 +27,8 @@ constexpr int x_origin          { 1  }; // Where text can begin appearing on the
 // >> Color of the text <<
 Color color(231, 84, 128);      // hot pink
 
-
 // >> Font Size <<
-const char* chosenFont = "";
+const char* chosenFont = "../fonts/5x7.bdf";
 
 
 
