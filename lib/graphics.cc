@@ -17,6 +17,8 @@
 #include "utf8-internal.h"
 
 #include <stdlib.h>
+
+#include <string>
 #include <functional>
 #include <algorithm>
 
@@ -83,11 +85,33 @@ int DrawText(Canvas *c, const Font &font,
   return DrawText(c, font, x, y, color, NULL, utf8_text);
 }
 
-int DrawText(Canvas *c, const Font &font,
-             int x, int y, const Color &color, const Color *background_color,
-             const char *utf8_text, int extra_spacing) {
-  const int start_x = x;
-  while (*utf8_text) {
+int DrawText( Canvas *c, 
+              const Font &font,
+              int x, 
+              int y, 
+              const Color &color, 
+              const Color *background_color,
+              const char *utf8_text, 
+              int extra_spacing)
+{
+  const int start_x = x; // Far left point of the screen, where we start placing the text
+  
+  std::string newlineFlag = "\n"; // Identify the new line flag we want to split the string at
+  std::string myText (utf8_text);       // Take a copy of the text to be printed
+
+  fprintf(stderr,utf8_text);
+  
+  if (myText.find(newlineFlag))
+  {
+    fprintf(stderr, "\n\n** Newline flag detected **\n\n");
+  }
+  else
+  {
+    fprintf(stderr, "\n\n** Single line **\n\n");
+  }
+
+  while (*utf8_text) 
+  {
     const uint32_t cp = utf8_next_codepoint(utf8_text);
     x += font.DrawGlyph(c, x, y, color, background_color, cp);
     x += extra_spacing;

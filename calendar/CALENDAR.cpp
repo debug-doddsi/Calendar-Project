@@ -24,10 +24,6 @@ int main(int argc, char *argv[])
   }
 
   RGBMatrix *canvas = RGBMatrix::CreateFromOptions(matrix_options, runtime_opt);
-  if (canvas == NULL)
-  {
-    return 1;
-  }
 
 std::time_t date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 struct tm datetime = *localtime(&date);
@@ -44,10 +40,13 @@ const char* text[] = {todaysDate,
                       "  @ 6pm"
                       };
 
-//font.CharacterWidth
+
+
+// This for loop operates like a typewriter
 for(auto i:text)
 {
-  rgb_matrix::DrawText(canvas,
+  // Print along the x axis
+  rgb_matrix::DrawText(canvas, // knows it is a 64x64 matrix
                        font, 
                        x_origin, 
                        y_origin + font.baseline(),
@@ -55,6 +54,8 @@ for(auto i:text)
                        NULL, 
                        i,
                        letter_spacing);
+
+  // Move down the y axis onto a new line
   y_origin += font.height();
 };
 
