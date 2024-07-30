@@ -7,5 +7,5 @@
   - RIGHT: Show the next day
   - LEFT: Show the previous day
   - UP: Go back up to the top of the day's event list
-  - After 2 minutes of no joystick activity, the calendar will return to the top of the current day's event list
--The calendar shall poll the Google API every 30 minutes for changes to the calendar
+- After 2 minutes of no joystick activity, the calendar will return to the top of the current day's event list
+- The calendar shall poll the Google API every 30 minutes for changes to the calendar
