@@ -2,7 +2,7 @@
 This is the main file for the Calendar tool
 */
 
-#include "CALENDAR.h"
+#include "Calendar.h"
 
 using namespace rgb_matrix;
 

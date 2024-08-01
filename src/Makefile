@@ -1,7 +1,7 @@
 CFLAGS=-Wall -O3 -g -Wextra -Wno-unused-parameter -std=c++20
 CXXFLAGS=$(CFLAGS)
-OBJECTS=CALENDAR.o
-BINARIES=CALENDAR
+OBJECTS=Calendar.o
+BINARIES=Calendar
 
 # Where our library resides. You mostly only need to change the
 # RGB_LIB_DISTRIBUTION, this is where the library is checked out.
@@ -21,7 +21,7 @@ all : $(BINARIES)
 $(RGB_LIBRARY): FORCE
 	$(MAKE) -C $(RGB_LIBDIR)
 
-CALENDAR : CALENDAR.o 
+Calendar : Calendar.o 
 
 # All the binaries that have the same name as the object file.q
 % : %.o $(RGB_LIBRARY)
