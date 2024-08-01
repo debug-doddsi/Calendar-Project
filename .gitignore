@@ -5,4 +5,4 @@
 .envrc
 .direnv
 .vscode/*
-calendar/CALENDAR
+src/Calendar
