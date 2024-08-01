@@ -33,8 +33,7 @@ struct tm datetime = *localtime(&date);
 char todaysDate [50]; // Allocate this amount of memory
 strftime(todaysDate, 50, "%a %e %b", &datetime);
 
-const char* text[] = {todaysDate,
-                      "",                 // Empty line
+const char* events[] = {
                       "> Breakfast",      // Sample entry 1
                       "  @ 9am",
                       "> Lunch",          // Sample entry 2
@@ -43,10 +42,19 @@ const char* text[] = {todaysDate,
                       "  @ 6pm"
                       };
 
+rgb_matrix::DrawText(canvas, // knows it is a 64x64 matrix
+                       font, 
+                       x_origin, 
+                       y_origin + font.baseline(),
+                       color, 
+                       NULL, 
+                       todaysDate,
+                       letter_spacing);
 
-
+y_origin += (font.height())*1.5; // new line plus a half (minimal gap between date and beginning of events)
+                       
 // This for loop operates like a typewriter
-for(auto i:text)
+for(auto i:events)
 {
   // Print along the x axis
   rgb_matrix::DrawText(canvas, // knows it is a 64x64 matrix
