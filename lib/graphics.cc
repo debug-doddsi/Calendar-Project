@@ -103,11 +103,11 @@ int DrawText( Canvas *c,
   
   if (myText.find(newlineFlag))
   {
-    fprintf(stderr, "\n\n** Newline flag detected **\n\n");
+    //fprintf(stderr, "\n\n** Newline flag detected **\n\n");
   }
   else
   {
-    fprintf(stderr, "\n\n** Single line **\n\n");
+    //fprintf(stderr, "\n\n** Single line **\n\n");
   }
 
   while (*utf8_text) 

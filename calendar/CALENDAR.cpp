@@ -17,13 +17,16 @@ int main(int argc, char *argv[])
 
   // Load font- This needs to be a filename with a bdf bitmap font.
   rgb_matrix::Font font;
+
+  fprintf(stdout, "Font path: %s\n\n", chosenFont);
+
   if (!font.LoadFont(chosenFont))
   {
-    fprintf(stderr, "Couldn't load font");
+    fprintf(stderr, "Couldn't load font\n\n");
     return 1;
   }
 
-  RGBMatrix *canvas = RGBMatrix::CreateFromOptions(matrix_options, runtime_opt);
+RGBMatrix *canvas = RGBMatrix::CreateFromOptions(matrix_options, runtime_opt);
 
 std::time_t date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
 struct tm datetime = *localtime(&date);
@@ -59,8 +62,7 @@ for(auto i:text)
   y_origin += font.height();
 };
 
-  char line[1024];
-  fgets(line, sizeof(line), stdin);
+  sleep(10);
   
   // Finished. Shut down the RGB matrix.
   delete canvas;
