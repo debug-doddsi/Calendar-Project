@@ -34,7 +34,7 @@ ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
 Color color(231, 84, 128);      // hot pink
 
 // >> Font Size <<
-std::string path = std::string(dirname(result)) + "/font.bdf";
+std::string path = std::string(dirname(result)) + "/../font.bdf";
 const char* chosenFont = path.data();
 
 

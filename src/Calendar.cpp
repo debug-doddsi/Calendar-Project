@@ -3,16 +3,25 @@ This is the main file for the Calendar tool
 */
 
 #include "Calendar.h"
+#include <pybind11/embed.h> // for embedding
+#include <pybind11/eval.h>
+
+namespace py = pybind11;
 
 using namespace rgb_matrix;
 
 int main(int argc, char *argv[])
 {
-  RGBMatrix::Options          matrix_options;
-  rgb_matrix::RuntimeOptions  runtime_opt;
+  
+  py::scoped_interpreter guard{}; // start the interpreter and keep it alive
+  py::object scope = py::module_::import("__main__").attr("__dict__");
+  py::eval_file("../Apple_API.py", scope);
+  
+  RGBMatrix::Options matrix_options;
+  rgb_matrix::RuntimeOptions runtime_opt;
 
-  matrix_options.cols                     = boardDimension;
-  matrix_options.rows                     = boardDimension;
+  matrix_options.cols = boardDimension;
+  matrix_options.rows = boardDimension;
   matrix_options.disable_hardware_pulsing = true; // Needs to be set true to get around an incompatibility with the board
 
   // Load font- This needs to be a filename with a bdf bitmap font.
@@ -26,52 +35,51 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-RGBMatrix *canvas = RGBMatrix::CreateFromOptions(matrix_options, runtime_opt);
+  RGBMatrix *canvas = RGBMatrix::CreateFromOptions(matrix_options, runtime_opt);
 
-std::time_t date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-struct tm datetime = *localtime(&date);
-char todaysDate [50]; // Allocate this amount of memory
-strftime(todaysDate, 50, "%a %e %b", &datetime);
+  std::time_t date = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+  struct tm datetime = *localtime(&date);
+  char todaysDate[50]; // Allocate this amount of memory
+  strftime(todaysDate, 50, "%a %e %b", &datetime);
 
-const char* events[] = {
-                      "> Breakfast",      // Sample entry 1
-                      "  @ 9am",
-                      "> Lunch",          // Sample entry 2
-                      "  @ 12pm",
-                      "> Dinner",         // Sample entry 3
-                      "  @ 6pm"
-                      };
+  const char *events[] = {
+      "> Breakfast", // Sample entry 1
+      "  @ 9am",
+      "> Lunch", // Sample entry 2
+      "  @ 12pm",
+      "> Dinner", // Sample entry 3
+      "  @ 6pm"};
 
-rgb_matrix::DrawText(canvas, // knows it is a 64x64 matrix
-                       font, 
-                       x_origin, 
+  rgb_matrix::DrawText(canvas, // knows it is a 64x64 matrix
+                       font,
+                       x_origin,
                        y_origin + font.baseline(),
-                       color, 
-                       NULL, 
+                       color,
+                       NULL,
                        todaysDate,
                        letter_spacing);
 
-y_origin += (font.height())*1.5; // new line plus a half (minimal gap between date and beginning of events)
-                       
-// This for loop operates like a typewriter
-for(auto i:events)
-{
-  // Print along the x axis
-  rgb_matrix::DrawText(canvas, // knows it is a 64x64 matrix
-                       font, 
-                       x_origin, 
-                       y_origin + font.baseline(),
-                       color, 
-                       NULL, 
-                       i,
-                       letter_spacing);
+  y_origin += (font.height()) * 1.5; // new line plus a half (minimal gap between date and beginning of events)
 
-  // Move down the y axis onto a new line
-  y_origin += font.height();
-};
+  // This for loop operates like a typewriter
+  for (auto i : events)
+  {
+    // Print along the x axis
+    rgb_matrix::DrawText(canvas, // knows it is a 64x64 matrix
+                         font,
+                         x_origin,
+                         y_origin + font.baseline(),
+                         color,
+                         NULL,
+                         i,
+                         letter_spacing);
+
+    // Move down the y axis onto a new line
+    y_origin += font.height();
+  };
 
   sleep(10);
-  
+
   // Finished. Shut down the RGB matrix.
   delete canvas;
 
