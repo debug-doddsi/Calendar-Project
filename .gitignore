@@ -6,3 +6,4 @@
 .direnv
 .vscode/*
 src/Calendar
+src/build/*
