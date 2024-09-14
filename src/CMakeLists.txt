@@ -6,10 +6,12 @@ link_directories   (${CMAKE_SOURCE_DIR}/../lib)       # Point to the RGB matrix 
 
 find_package  (pybind11 REQUIRED)                     # Locating the pybind stuff (it is globally installed)
 add_executable(Calendar Calendar.cpp)                 # Adding the code
+add_library   (ADS1115 ../lib/ads1115.cpp ../include/ads1115.h)
 
 target_link_libraries(  
                         Calendar                      # Point to the Calendar.o
                         pybind11::embed               # Point to pybind11
                         rgbmatrix                     # Point to where the RGB matrix stuff lives
                         pthread                       # Added bc it was complaining without it :)
+                        ADS1115
                      )

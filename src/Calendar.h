@@ -10,6 +10,7 @@ This is the header file for the Calendar tool
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <ads1115.h>
 
 #include <iostream>
 #include <filesystem>
