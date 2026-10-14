@@ -6,4 +6,6 @@
 .direnv
 .vscode/*
 src/Calendar
-src/build/*
+src/build/
+__pycache__/
+tests/build/

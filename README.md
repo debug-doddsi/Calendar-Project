@@ -12,8 +12,23 @@
 
 ## Building
 
+    make                # builds the LED matrix library in lib/
     mkdir src/build
     cd src/build
     cmake ../
     make
     ./Calendar
+
+## iCloud login
+
+`src/Apple_API.py` reads your Apple ID from the environment so it is not stored in the repo:
+
+    export ICLOUD_USERNAME="you@example.com"
+
+## Tests
+
+The joystick and navigation logic in `src/Navigation.h` has no hardware dependencies and can be tested on any machine:
+
+    cmake -S tests -B tests/build
+    cmake --build tests/build
+    ctest --test-dir tests/build

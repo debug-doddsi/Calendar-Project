@@ -3,6 +3,7 @@ This is the main file for the Calendar tool
 */
 
 #include "Calendar.h"
+#include "Navigation.h"
 #include <pybind11/embed.h> // for embedding
 #include <pybind11/eval.h>
 #include <chrono>
@@ -85,39 +86,18 @@ int main(int argc, char *argv[])
   // // Finished. Shut down the RGB matrix.
   // delete canvas;
 
-  ADS1115* pADC = new ADS1115("/dev/i2c-1", 0x48);
-  
-  while(true){
-    double Y_value = pADC->ReadData(1);
-    double X_value = pADC->ReadData(2);
-    std::string message;
+  ADS1115 adc("/dev/i2c-1", 0x48);
 
-    if ( Y_value > 20000 )
-    {
-      message = "North";
-    }
-    else if ( Y_value < 6000 )
-    {
-      message = "South";
-    }
-    else if ( X_value > 20000 )
-    {
-      message = "East";
-    }
-    else if ( X_value < 6000 )
-    {
-      message = "WestSIDE MOTHERFUCKER";
-    }
-    else // shits fucked
-    {
-      message = "Center";
-    }
-        
+  while(true){
+    double Y_value = adc.ReadData(1);
+    double X_value = adc.ReadData(2);
+    const char *names[] = { "Center" /* shits fucked */, "North", "South", "East", "WestSIDE MOTHERFUCKER" };
+    const char *message = names[static_cast<int>(classify(X_value, Y_value))];
 
     std::cout << "Joystick Direction: " << message << std::endl;
 
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  };
+  }
 
   return 0;
 }
