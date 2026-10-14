@@ -1,5 +1,5 @@
 from pyicloud import PyiCloudService
-import datetime
+import sys
 
 api = PyiCloudService('ionadodds+apple@gmail.com')
 
@@ -48,5 +48,3 @@ for x in api.calendar.events():
         print(x.get('startDate'))
         print(x.get('allDay'))
         print()
-
-

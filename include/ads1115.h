@@ -31,8 +31,8 @@ private:
     double conversionFactor;
 
 public:
-    const uint16_t Ch1SingleEnded  = 0x4000;// AIN0(+)-AIN1(-)
-    const uint16_t Ch2SingleEnded  = 0x5000;// AIN2(+)-AIN3(-)
+    const uint16_t Ch1SingleEnded  = 0x4000;// AIN0 vs GND
+    const uint16_t Ch2SingleEnded  = 0x5000;// AIN1 vs GND
 
     const uint16_t FS1024 = 0x0200;// +/-1.024V
 

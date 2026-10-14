@@ -85,11 +85,11 @@ int main(int argc, char *argv[])
   // // Finished. Shut down the RGB matrix.
   // delete canvas;
 
-  ADS1115* pADC = new ADS1115("/dev/i2c-1", 0x48);
-  
+  ADS1115 adc("/dev/i2c-1", 0x48);
+
   while(true){
-    double Y_value = pADC->ReadData(1);
-    double X_value = pADC->ReadData(2);
+    double Y_value = adc.ReadData(1);
+    double X_value = adc.ReadData(2);
     std::string message;
 
     if ( Y_value > 20000 )
@@ -106,18 +106,17 @@ int main(int argc, char *argv[])
     }
     else if ( X_value < 6000 )
     {
-      message = "WestSIDE MOTHERFUCKER";
+      message = "West";
     }
-    else // shits fucked
+    else
     {
       message = "Center";
     }
-        
 
     std::cout << "Joystick Direction: " << message << std::endl;
 
     std::this_thread::sleep_for(std::chrono::milliseconds(100));
-  };
+  }
 
   return 0;
 }

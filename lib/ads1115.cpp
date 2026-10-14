@@ -5,14 +5,17 @@
 #include <thread>
 
 ADS1115::ADS1115(std::string sBus, int iAddress)
-    : fd(0), i2cBus(sBus), ads1115_address(iAddress)
+    : fd(-1), i2cBus(sBus), ads1115_address(iAddress)
 {
   Initialize(); // init when constructing
 }
 
 ADS1115::~ADS1115()
 {
-  close(fd);
+  if (fd >= 0)
+  {
+    close(fd);
+  }
 }
 
 void ADS1115::Initialize()
@@ -20,12 +23,14 @@ void ADS1115::Initialize()
   // open device on /dev/i2c-1
   if ((fd = open(i2cBus.c_str(), O_RDWR)) < 0)
   {
-    printf("ADS1115 Error: Couldn't open device! %d\n", fd);
+    printf("ADS1115 Error: Couldn't open device %s\n", i2cBus.c_str());
+    return;
   }
   // connect to ADS1115 as i2c slave
   if (ioctl(fd, I2C_SLAVE, ads1115_address) < 0)
   {
     printf("Error: Couldn't find ADS1115 on address!\n");
+    return;
   }
 
   ChangeConfig(1);
