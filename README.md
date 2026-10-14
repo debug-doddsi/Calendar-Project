@@ -12,6 +12,7 @@
 
 ## Building
 
+    make                # builds the LED matrix library in lib/
     mkdir src/build
     cd src/build
     cmake ../
