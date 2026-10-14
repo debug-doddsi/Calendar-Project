@@ -1,7 +1,12 @@
 from pyicloud import PyiCloudService
+import os
 import sys
 
-api = PyiCloudService('ionadodds+apple@gmail.com')
+username = os.environ.get('ICLOUD_USERNAME')
+if not username:
+    sys.exit("Set the ICLOUD_USERNAME environment variable to your Apple ID email")
+
+api = PyiCloudService(username)
 
 if api.requires_2fa:
     print("Two-factor authentication required.")

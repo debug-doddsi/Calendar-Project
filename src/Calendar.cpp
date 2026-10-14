@@ -3,6 +3,7 @@ This is the main file for the Calendar tool
 */
 
 #include "Calendar.h"
+#include "Navigation.h"
 #include <pybind11/embed.h> // for embedding
 #include <pybind11/eval.h>
 #include <chrono>
@@ -90,28 +91,8 @@ int main(int argc, char *argv[])
   while(true){
     double Y_value = adc.ReadData(1);
     double X_value = adc.ReadData(2);
-    std::string message;
-
-    if ( Y_value > 20000 )
-    {
-      message = "North";
-    }
-    else if ( Y_value < 6000 )
-    {
-      message = "South";
-    }
-    else if ( X_value > 20000 )
-    {
-      message = "East";
-    }
-    else if ( X_value < 6000 )
-    {
-      message = "West";
-    }
-    else
-    {
-      message = "Center";
-    }
+    const char *names[] = { "Center", "North", "South", "East", "West" };
+    const char *message = names[static_cast<int>(classify(X_value, Y_value))];
 
     std::cout << "Joystick Direction: " << message << std::endl;
 

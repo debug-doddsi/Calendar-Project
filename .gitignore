@@ -8,3 +8,4 @@
 src/Calendar
 src/build/
 __pycache__/
+tests/build/
