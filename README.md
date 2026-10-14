@@ -19,13 +19,29 @@
     make
     ./Calendar
 
-## iCloud login
+## Google Calendar setup
 
-`src/Apple_API.py` reads your Apple ID from the environment so it is not stored in the repo:
+Events come from the Google Calendar API (`gcal/`). Python, standard library only.
 
-    export ICLOUD_USERNAME="you@example.com"
+One-off setup, on your laptop:
 
-## Tests
+1. In the [Google Cloud console](https://console.cloud.google.com/) create a project and enable the **Google Calendar API**.
+2. Under **APIs & Services > OAuth consent screen**, set it up as External, add yourself as a test user, then **publish the app to production**. If you leave it in Testing, the refresh token expires after 7 days. You will see an "unverified app" warning when you sign in, which is fine for your own account.
+3. Under **Credentials**, create an **OAuth client ID** of type **Desktop app** and download the JSON.
+4. Run the login script:
+
+       python3 gcal/auth_setup.py ~/Downloads/client_secret_xxx.json
+
+   This writes `gcal/secrets.json` (gitignored) with your refresh token. Copy that file to the display device. Never commit it.
+5. Check it works:
+
+       python3 gcal/show_today.py
+
+Tests (no network or credentials needed):
+
+    cd gcal && python3 -m unittest discover -s tests -v
+
+## C++ tests
 
 The joystick and navigation logic in `src/Navigation.h` has no hardware dependencies and can be tested on any machine:
 

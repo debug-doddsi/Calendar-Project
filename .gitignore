@@ -9,3 +9,7 @@ src/Calendar
 src/build/
 __pycache__/
 tests/build/
+
+# Google credentials
+gcal/secrets.json
+client_secret*.json

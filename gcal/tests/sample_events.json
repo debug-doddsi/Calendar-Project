@@ -1,0 +1,9 @@
+{
+  "items": [
+    {"summary": "Lunch", "start": {"dateTime": "2026-10-14T12:30:00+01:00"}, "end": {"dateTime": "2026-10-14T13:30:00+01:00"}},
+    {"summary": "Bank holiday", "start": {"date": "2026-10-14"}, "end": {"date": "2026-10-15"}},
+    {"summary": "Standup (recurring instance)", "start": {"dateTime": "2026-10-14T09:00:00+01:00"}, "end": {"dateTime": "2026-10-14T09:15:00+01:00"}},
+    {"summary": "Dentist", "start": {"dateTime": "2026-10-15T08:00:00+01:00"}, "end": {"dateTime": "2026-10-15T08:45:00+01:00"}},
+    {"start": {"dateTime": "2026-10-14T18:00:00+01:00"}, "end": {"dateTime": "2026-10-14T19:00:00+01:00"}}
+  ]
+}
