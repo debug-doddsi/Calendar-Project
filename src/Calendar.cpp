@@ -91,7 +91,7 @@ int main(int argc, char *argv[])
   while(true){
     double Y_value = adc.ReadData(1);
     double X_value = adc.ReadData(2);
-    const char *names[] = { "Center", /* shits fucked */ "North", "South", "East", "WestSIDE MOTHERFUCKER" };
+    const char *names[] = { "Center" /* shits fucked */, "North", "South", "East", "WestSIDE MOTHERFUCKER" };
     const char *message = names[static_cast<int>(classify(X_value, Y_value))];
 
     std::cout << "Joystick Direction: " << message << std::endl;
